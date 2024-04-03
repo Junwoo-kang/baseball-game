@@ -11,8 +11,6 @@ public class Hitter {
 
         System.out.println("숫자를 입력해주세요: ");
         String tryNumber = scanner.next();
-        System.out.println(tryNumber);
-
         this.HitNumber = tryNumber.split("");
 
 

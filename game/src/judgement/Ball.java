@@ -1,10 +1,7 @@
 package judgement;
 
-public class Ball {
+public enum Ball {
 
-    int BALL;
-    int STRIKE;
-    public Ball(){
-    }
+    BALL, STRIKE, NOTHING
 
 }
