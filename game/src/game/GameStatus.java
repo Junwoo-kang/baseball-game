@@ -1,7 +1,7 @@
 package game;
 
 public interface GameStatus {
-    public void start();
+    public boolean start();
 
-    public void end();
+    public boolean end();
 }

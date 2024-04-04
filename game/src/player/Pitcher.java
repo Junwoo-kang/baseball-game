@@ -1,6 +1,6 @@
 package player;
 
-public class Pitcher implements ThrowBall {
+public class Pitcher{
 
     public String[] randomScore = new String[3];
 

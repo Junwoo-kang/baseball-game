@@ -1,44 +1,49 @@
 package game;
 
-import judgement.Ball;
-import judgement.Refree;
-import player.Hitter;
-import player.Pitcher;
-
-import java.util.List;
 import java.util.Scanner;
 
 public class Game implements GameStatus {
 
-    boolean GameStart;
-    Scanner scanner;
+    public boolean GameStart;
+    private Scanner scanner;
 
-    public Game(){
-        this.GameStart = true;
-        this.scanner = new Scanner(System.in);
+    public Game(Scanner scanner){
+        this.scanner = scanner;
     }
-    public void start() {
-        Game game = new Game();
-        Pitcher pitcher = new Pitcher();
-        for (String a : pitcher.randomScore) {
-            System.out.println(a);
 
+    public void isRepeat(){
+        System.out.print("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요. ");
+
+        String repeat = scanner.next();
+        validInput(repeat);
+        getRepeat(repeat);
+    }
+
+    private void getRepeat(String repeat) {
+        if "1".equals(repeat) ? start() : end();
+//        if ("1".equals(repeat)) {
+//            start();
+//        } else end();
+    }
+
+    private void validInput(String input) {
+
+        if (input.length() > 3 || input.isEmpty()) {
+            String message = "숫자는 3개 이하여야 합니다.";
+            throw new IllegalArgumentException(message);
         }
-        Hitter hitter = new Hitter(scanner);
-
-        Refree refree = new Refree();
-
-        List<Ball> result = refree.compareTo(pitcher, hitter);
-
-        System.out.println(result);
-
-
-
-
-
     }
 
-    public void end() {
-
+    public boolean start() {
+        return this.GameStart = true;
     }
+
+    public boolean end() {
+        return this.GameStart = false;
+    }
+
+    public Scanner getScanner() {
+        return this.scanner;
+    }
+
 }
