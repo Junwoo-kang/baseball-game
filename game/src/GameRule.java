@@ -1,8 +1,8 @@
 public interface GameRule {
 
-    int setRule(GameStatus game);
-
     void play();
+
+    int setRule(GameStatus game);
 
     int getRule();
 }

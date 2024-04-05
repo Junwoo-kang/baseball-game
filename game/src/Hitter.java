@@ -11,11 +11,22 @@ public class Hitter implements InputValue {
     }
 
     public void validInput(String input) {
+        String message;
 
-        if (input.length() != 3) {
-            String message = "숫자는 3개 이하여야 합니다.";
+        try {
+            Integer.parseInt(input);
+            if (input.length() != HitNumber.length) {
+                throw new IllegalArgumentException();
+            }
+        } catch (NumberFormatException e) {
+            message = "입력은 숫자로 해주세요";
+            throw new IllegalArgumentException(message);
+        } catch (IllegalArgumentException e) {
+            message = "숫자는 3개 이하여야 합니다.";
             throw new IllegalArgumentException(message);
         }
+
+
     }
 
     @Override

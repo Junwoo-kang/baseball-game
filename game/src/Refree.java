@@ -10,7 +10,7 @@ public class Refree implements GameRule{
         scanner = game.getScanner();
     }
 
-    public List<Ball> compareTo(InputValue pitcher, InputValue hitter) {
+    private List<Ball> compareTo(InputValue pitcher, InputValue hitter) {
 
         List<Ball> ballList = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class Refree implements GameRule{
         return ballList;
     }
 
-    public boolean isOut(List<Ball> result) {
+    private boolean isOut(List<Ball> result) {
 
         int strikeCnt = (int) result.stream().filter(c -> c.equals(Ball.STRIKE)).count();
         int ballCnt = (int) result.stream().filter(c -> c.equals(Ball.BALL)).count();
@@ -44,7 +44,7 @@ public class Refree implements GameRule{
 
     }
 
-    public void printResult(int strikeCnt, int ballCnt) {
+    private void printResult(int strikeCnt, int ballCnt) {
         StringBuilder stBuilder = new StringBuilder();
 
         if (strikeCnt == 0 && ballCnt == 0) {
@@ -64,8 +64,8 @@ public class Refree implements GameRule{
     public void play() {
         List<Ball> result;
 
-        InputValue pitcher = new Pitcher(gameRuleLength);
-        InputValue hitter = new Hitter(gameRuleLength,scanner);
+        InputValue pitcher = new Pitcher(getRule());
+        InputValue hitter = new Hitter(getRule(),scanner);
         do {
             hitter.create();
             result = compareTo(pitcher, hitter);
@@ -73,13 +73,13 @@ public class Refree implements GameRule{
     }
 
     @Override
+    public int setRule(GameStatus rule) {
+        return rule.getGameRuleLength();
+    }
+
+    @Override
     public int getRule() {
         return gameRuleLength;
     }
 
-
-    @Override
-    public int setRule(GameStatus rule) {
-        return rule.getGameRuleLength();
-    }
 }
