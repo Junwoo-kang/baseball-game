@@ -1,14 +1,20 @@
-package player;
+import java.util.Scanner;
 
-public class Pitcher{
+public class Pitcher implements InputValue{
 
-    public String[] randomScore = new String[3];
+    public String[] randomScore;
 
-    public Pitcher() {
+
+    public Pitcher(int rule) {
+        this.randomScore = new String[rule];
+        create();
+    }
+
+    @Override
+    public void create() {
         StringBuilder randomNum = new StringBuilder();
-        String[] randomScore = new String[3];
         String number;
-        int pitch = 3;
+        int pitch = randomScore.length;
         int i = 0;
         while (i < pitch) {
             number = String.valueOf((int) (Math.random() * 9) + 1);
@@ -18,7 +24,12 @@ public class Pitcher{
                 i++;
             }
         }
-        this.randomScore = randomScore;
+
+    }
+
+    @Override
+    public String[] getcreatedNumber() {
+        return randomScore;
     }
 
 }

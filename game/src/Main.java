@@ -1,28 +1,21 @@
-import game.Game;
-import judgement.Ball;
-import judgement.Refree;
-import player.Hitter;
-import player.Pitcher;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Game game = new Game(scanner);
+        GameStatus game = setGameRuleOnLength();
 
         do {
+            GameRule refree = new Refree(game);
             game.start();
-            Pitcher pitcher = new Pitcher();
-            Refree refree = new Refree();
-            refree.play(game,pitcher);
-        } while (game.GameStart);
+            refree.play();
+        } while (game.isRepeat());
 
     }
 
+    public static GameStatus setGameRuleOnLength() {
+        Scanner scanner = new Scanner(System.in);
 
-
+        return new Game( scanner, 3);
+    }
 }
