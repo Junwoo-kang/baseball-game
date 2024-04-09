@@ -1,3 +1,7 @@
+package player;
+
+import judgement.ValidInputFactory;
+
 import java.util.Scanner;
 
 public class Hitter implements Player {

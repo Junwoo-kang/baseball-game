@@ -1,3 +1,8 @@
+import game.Game;
+import game.GameStatus;
+import judgement.GameRule;
+import judgement.Refree;
+
 import java.util.Scanner;
 
 public class Main {

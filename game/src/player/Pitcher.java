@@ -1,4 +1,4 @@
-import java.util.Arrays;
+package player;
 
 public class Pitcher implements Player {
 

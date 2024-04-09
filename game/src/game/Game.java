@@ -1,3 +1,7 @@
+package game;
+
+import judgement.ValidInputFactory;
+
 import java.util.Scanner;
 
 public class Game implements GameStatus {
@@ -20,7 +24,6 @@ public class Game implements GameStatus {
     @Override
     public boolean isRepeat(){
         System.out.print("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요. ");
-
         String repeat = scanner.next();
         new ValidInputFactory().validInput(repeat);
 

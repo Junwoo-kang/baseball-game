@@ -1,3 +1,10 @@
+package judgement;
+
+import game.GameStatus;
+import player.Hitter;
+import player.Pitcher;
+import player.Player;
+
 import java.util.*;
 
 public class Refree implements GameRule{
@@ -45,7 +52,12 @@ public class Refree implements GameRule{
 
         printResult(strikeCnt, ballCnt);
 
-        return result.size() == strikeCnt;
+        boolean out = result.size() == strikeCnt;
+        if (out) {
+            System.out.println("아웃! 게임 종료"+"\n");
+        }
+
+        return out;
 
     }
 
@@ -62,7 +74,7 @@ public class Refree implements GameRule{
             strBuilder.append(strikeCnt).append("스트라이크");
         }
 
-        System.out.println(strBuilder + "\n");
+        System.out.println(strBuilder);
     }
 
     @Override
