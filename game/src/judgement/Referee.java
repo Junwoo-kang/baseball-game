@@ -7,16 +7,22 @@ import player.Player;
 
 import java.util.*;
 
-public class Refree implements GameRule{
+public class Referee implements GameRule{
 
     private static int gameRuleLength;
     private static Scanner scanner;
 
-    public Refree(GameStatus game) {
+    public Referee(GameStatus game) {
         setRule(game);
         scanner = game.getScanner();
     }
 
+    /**
+     * Pitcher, Hitter 순으로 작성해야함.
+     * @param pitcher
+     * @param hitter
+     * @return List<Ball>
+     */
     private List<Ball> compareTo(Player pitcher, Player hitter) {
 
         List<Ball> ballList = new ArrayList<>();
@@ -52,12 +58,7 @@ public class Refree implements GameRule{
 
         printResult(strikeCnt, ballCnt);
 
-        boolean out = result.size() == strikeCnt;
-        if (out) {
-            System.out.println("아웃! 게임 종료"+"\n");
-        }
-
-        return out;
+        return result.size() == strikeCnt;
 
     }
 
@@ -72,6 +73,9 @@ public class Refree implements GameRule{
         }
         if (strikeCnt != 0) {
             strBuilder.append(strikeCnt).append("스트라이크");
+        }
+        if (strikeCnt == 3) {
+            strBuilder.append(strikeCnt).append("\n아웃! 게임 종료\n");
         }
 
         System.out.println(strBuilder);

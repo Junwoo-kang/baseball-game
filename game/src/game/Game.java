@@ -1,14 +1,16 @@
 package game;
 
+import judgement.ValidInput;
 import judgement.ValidInputFactory;
 
 import java.util.Scanner;
 
 public class Game implements GameStatus {
 
-    private static boolean GameStart;
+    private static Boolean isPlaying;
     private static Scanner scanner;
     private static int gameRuleLength;
+    private final ValidInput validInput = new ValidInputFactory();
     private void getRepeat(String repeat) {
         boolean repeatAble = (repeat.equals("1"));
 
@@ -25,21 +27,21 @@ public class Game implements GameStatus {
     public boolean isRepeat(){
         System.out.print("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요. ");
         String repeat = scanner.next();
-        new ValidInputFactory().validInput(repeat);
+        validInput.validInput(repeat);
 
         getRepeat(repeat);
 
-        return GameStart;
+        return isPlaying;
     }
 
     @Override
     public boolean start() {
-        return GameStart = true;
+        return isPlaying = true;
     }
 
     @Override
     public boolean end() {
-        return GameStart = false;
+        return isPlaying = false;
     }
 
     @Override

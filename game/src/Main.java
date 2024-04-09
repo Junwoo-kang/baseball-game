@@ -1,7 +1,7 @@
 import game.Game;
 import game.GameStatus;
 import judgement.GameRule;
-import judgement.Refree;
+import judgement.Referee;
 
 import java.util.Scanner;
 
@@ -10,9 +10,9 @@ public class Main {
     public static void main(String[] args) {
         GameStatus game = setGameRuleOnLength();
         do {
-            GameRule refree = new Refree(game);
+            GameRule referee = new Referee(game);
             game.start();
-            refree.play();
+            referee.play();
         } while (game.isRepeat());
 
     }

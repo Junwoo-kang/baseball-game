@@ -5,8 +5,8 @@ public class Pitcher implements Player {
     public String[] randomScore;
 
 
-    public Pitcher(int rule) {
-        this.randomScore = new String[rule];
+    public Pitcher(int ruleLength) {
+        this.randomScore = new String[ruleLength];
         createNumberArray();
     }
 

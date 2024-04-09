@@ -3,9 +3,9 @@ package judgement;
 public class ValidInputFactory implements ValidInput {
 
     @Override
-    public void validInput(String[] rule, String input) {
+    public void validInput(int ruleLength, String input) {
         String message;
-        boolean validInput = (input.length() == rule.length);
+        boolean validInput = (input.length() == ruleLength);
         try {
             if (validInput) {
                 Integer.parseInt(input);
