@@ -6,26 +6,31 @@ public class Refree implements GameRule{
     private static Scanner scanner;
 
     public Refree(GameStatus game) {
-        gameRuleLength = setRule(game);
+        setRule(game);
         scanner = game.getScanner();
     }
 
-    private List<Ball> compareTo(InputValue pitcher, InputValue hitter) {
+    private List<Ball> compareTo(Player pitcher, Player hitter) {
 
         List<Ball> ballList = new ArrayList<>();
 
-        String[] hit = hitter.getcreatedNumber();
-        String[] pit = pitcher.getcreatedNumber();
+        String[] pitNumber = pitcher.getCreatedNumber();
+        String[] hitNumber = hitter.getCreatedNumber();
 
-        for (int i = 0; i <= hit.length - 1; i++) {
-            for (int j = 0; j <= hit.length - 1; j++) {
-                if (hit[i].equals(pit[j]) && i == j) {
+        for (int i = 0; i <= gameRuleLength - 1; i++) {
+            for (int j = 0; j <= gameRuleLength - 1; j++) {
+                boolean judgementStrike = hitNumber[i].equals(pitNumber[j]) && i == j;
+                boolean judgementBall = hitNumber[i].equals(pitNumber[j]) && i != j;
+
+                if (judgementStrike) {
                     ballList.add(Ball.STRIKE);
-                } else if (hit[i].equals(pit[j]) && i != j) {
+                } else if (judgementBall) {
                     ballList.add(Ball.BALL);
                 }
             }
-            if (ballList.size() != (i + 1)) {
+
+            boolean validBallList = ballList.size() != (i + 1);
+            if (validBallList) {
                 ballList.add(Ball.NOTHING);
             }
         }
@@ -45,36 +50,36 @@ public class Refree implements GameRule{
     }
 
     private void printResult(int strikeCnt, int ballCnt) {
-        StringBuilder stBuilder = new StringBuilder();
+        StringBuilder strBuilder = new StringBuilder();
 
         if (strikeCnt == 0 && ballCnt == 0) {
-            stBuilder.append("낫싱");
+            strBuilder.append("낫싱");
         }
         if (ballCnt != 0) {
-            stBuilder.append(ballCnt).append("볼");
+            strBuilder.append(ballCnt).append("볼");
         }
         if (strikeCnt != 0) {
-            stBuilder.append(strikeCnt).append("스트라이크");
+            strBuilder.append(strikeCnt).append("스트라이크");
         }
 
-        System.out.println(stBuilder + "\n");
+        System.out.println(strBuilder + "\n");
     }
 
     @Override
     public void play() {
         List<Ball> result;
 
-        InputValue pitcher = new Pitcher(getRule());
-        InputValue hitter = new Hitter(getRule(),scanner);
+        Player pitcher = new Pitcher(getRule());
+        Player hitter = new Hitter(getRule(),scanner);
         do {
-            hitter.create();
+            hitter.createNumberArray();
             result = compareTo(pitcher, hitter);
         } while (!isOut(result));
     }
 
     @Override
-    public int setRule(GameStatus rule) {
-        return rule.getGameRuleLength();
+    public void setRule(GameStatus rule) {
+        gameRuleLength = rule.getGameRuleLength();
     }
 
     @Override

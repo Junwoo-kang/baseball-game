@@ -1,17 +1,17 @@
-import java.util.Scanner;
+import java.util.Arrays;
 
-public class Pitcher implements InputValue{
+public class Pitcher implements Player {
 
     public String[] randomScore;
 
 
     public Pitcher(int rule) {
         this.randomScore = new String[rule];
-        create();
+        createNumberArray();
     }
 
     @Override
-    public void create() {
+    public void createNumberArray() {
         StringBuilder randomNum = new StringBuilder();
         String number;
         int pitch = randomScore.length;
@@ -23,12 +23,14 @@ public class Pitcher implements InputValue{
                 randomScore[i] = number;
                 i++;
             }
+            System.out.println(number);
         }
+
 
     }
 
     @Override
-    public String[] getcreatedNumber() {
+    public String[] getCreatedNumber() {
         return randomScore;
     }
 

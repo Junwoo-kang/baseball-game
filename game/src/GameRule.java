@@ -2,7 +2,7 @@ public interface GameRule {
 
     void play();
 
-    int setRule(GameStatus game);
+    void setRule(GameStatus game);
 
     int getRule();
 }
