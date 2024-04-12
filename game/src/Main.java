@@ -1,5 +1,6 @@
 import game.Game;
 import game.GameStatus;
+import judgement.GameAssociation;
 import judgement.GameRule;
 import judgement.Referee;
 
@@ -8,18 +9,17 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        GameStatus game = setGameRuleOnLength();
+        GameRule gameAssociation = gameInit();
+        GameStatus game = new Game(gameAssociation);
         do {
-            GameRule referee = new Referee(game);
-            game.start();
-            referee.play();
+            game.play();
         } while (game.isRepeat());
 
     }
 
-    public static GameStatus setGameRuleOnLength() {
-        Scanner scanner = new Scanner(System.in);
+    public static GameRule gameInit() {
+        int gameRuleLength = 3;
 
-        return new Game( scanner, 3);
+        return new GameAssociation(gameRuleLength);
     }
 }

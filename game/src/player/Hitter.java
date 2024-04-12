@@ -1,18 +1,20 @@
 package player;
 
-import judgement.ValidInput;
-import judgement.ValidInputFactory;
+import judgement.GameAssociation;
+import judgement.GameRule;
+import valid.ValidInput;
+import valid.ValidInputFactory;
 
 import java.util.Scanner;
 
-public class Hitter implements Player {
+public class Hitter implements NumberProducer {
 
     public String[] HitNumber;
     private final Scanner scanner;
     private final ValidInput validInput = new ValidInputFactory();
 
-    public Hitter(int ruleLength,Scanner scanner) {
-        this.HitNumber = new String[ruleLength];
+    public Hitter(GameRule gameRule, Scanner scanner) {
+        this.HitNumber = new String[gameRule.getRule()];
         this.scanner = scanner;
     }
 
@@ -21,7 +23,8 @@ public class Hitter implements Player {
 
         System.out.print("숫자를 입력해주세요: ");
         String inputNumber = scanner.next();
-        validInput.validInput(HitNumber.length,inputNumber);
+        validInput.hitAble(HitNumber.length,inputNumber);
+
         this.HitNumber = inputNumber.split("");
     }
 

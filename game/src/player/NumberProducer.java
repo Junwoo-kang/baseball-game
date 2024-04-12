@@ -1,6 +1,6 @@
 package player;
 
-public interface Player {
+public interface NumberProducer {
     public void createNumberArray();
     public String[] getCreatedNumber();
 

@@ -1,16 +1,22 @@
-package judgement;
+package valid;
+
+import game.Game;
+import judgement.GameAssociation;
+import judgement.GameOption;
 
 public class ValidInputFactory implements ValidInput {
 
     @Override
-    public void validInput(int ruleLength, String input) {
+    public void hitAble(int ruleLength, String input) {
+
         String message;
         boolean validInput = (input.length() == ruleLength);
         try {
             if (validInput) {
                 Integer.parseInt(input);
-            }else
+            }else {
                 throw new IllegalArgumentException();
+            }
         } catch (NumberFormatException e) {
             message = "입력은 숫자로 해주세요";
             throw new IllegalArgumentException(message);
@@ -21,13 +27,20 @@ public class ValidInputFactory implements ValidInput {
     }
 
     @Override
-    public void validInput(String input) {
+    public void gameRepeatAble(String input) {
 
-        boolean validInput = (input.equals("1") || input.equals("2"));
+//        String s = GameOption.findValueByInput(input);
+        GameOption gameOption = GameOption.findAnyValuebyInput(input);
 
-        if (!validInput) {
-            String message = "숫자는 1이거나 2여야만 합니다.";
+        boolean validInput = (gameOption == null);
+        if (validInput) {
+            String message = String.format(
+                    "게임을 새로 시작하려면 %s, 종료하려면 %s를 입력하세요",
+                    GameOption.CONTINUE.getValue(),
+                    GameOption.EXIT.getValue()
+            );
             throw new IllegalArgumentException(message);
         }
     }
+
 }

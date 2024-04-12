@@ -1,57 +1,81 @@
 package game;
 
-import judgement.ValidInput;
-import judgement.ValidInputFactory;
+import judgement.*;
+import player.Hitter;
+import player.Pitcher;
+import player.NumberProducer;
+import valid.ValidInput;
+import valid.ValidInputFactory;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Game implements GameStatus {
 
     private static Boolean isPlaying;
-    private static Scanner scanner;
-    private static int gameRuleLength;
+    private final GameRule gameRule;
+    private final Scanner scanner;
     private final ValidInput validInput = new ValidInputFactory();
-    private void getRepeat(String repeat) {
-        boolean repeatAble = (repeat.equals("1"));
+    public Game(GameRule gameRule) {
+        this.gameRule = gameRule;
+        this.scanner = new Scanner(System.in);
+    }
 
-        if (repeatAble) {
+    private void getRepeat(String repeat) {
+        if (GameOption.CONTINUE.isContinue(repeat)) {
             start();
         } else end();
     }
 
-    public Game( Scanner scanner, int gameRuleLength){
-        Game.scanner = scanner;
-        Game.gameRuleLength = gameRuleLength;
-    }
     @Override
-    public boolean isRepeat(){
-        System.out.print("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요. ");
+    public boolean isRepeat() {
+
+        String message = String.format(
+                "게임을 새로 시작하려면 %s, 종료하려면 %s를 입력하세요",
+                GameOption.CONTINUE.getValue(),
+                GameOption.EXIT.getValue()
+        );
+        System.out.println(message);
+
         String repeat = scanner.next();
-        validInput.validInput(repeat);
+        validInput.gameRepeatAble(repeat);
 
         getRepeat(repeat);
 
         return isPlaying;
     }
 
+    //    게임시작
     @Override
-    public boolean start() {
-        return isPlaying = true;
+    public void start() {
+        isPlaying = true;
+    }
+    @Override
+    public void end() {
+        isPlaying = false;
     }
 
-    @Override
-    public boolean end() {
-        return isPlaying = false;
+    public void play() {
+        start();
+        List<Ball> result;
+
+        NumberProducer pitcher = new Pitcher(gameRule);
+        NumberProducer hitter = new Hitter(gameRule, scanner);
+        JudgeMent referee = new Referee(gameRule);
+        do {
+            hitter.createNumberArray();
+            result = referee.compareTo(pitcher, hitter);
+        } while (!referee.isOut(result) && isPlaying);
+
+        /**     out     playing result
+         *      false   true    true
+         *      true    true    false
+         *
+         *      false   false   false
+         *      true    false   false
+         */
+
     }
 
-    @Override
-    public Scanner getScanner()  {
-        return scanner;
-    }
-
-    @Override
-    public int getGameRuleLength() {
-        return Game.gameRuleLength;
-    }
 
 }

@@ -1,20 +1,16 @@
 package judgement;
 
-import game.GameStatus;
-import player.Hitter;
-import player.Pitcher;
-import player.Player;
+import player.NumberProducer;
 
 import java.util.*;
 
-public class Referee implements GameRule{
+public class Referee implements JudgeMent{
 
     private static int gameRuleLength;
-    private static Scanner scanner;
+    private static Boolean isOut;
 
-    public Referee(GameStatus game) {
-        setRule(game);
-        scanner = game.getScanner();
+    public Referee(GameRule game) {
+        gameRuleLength = game.getRule();
     }
 
     /**
@@ -23,7 +19,8 @@ public class Referee implements GameRule{
      * @param hitter
      * @return List<Ball>
      */
-    private List<Ball> compareTo(Player pitcher, Player hitter) {
+    @Override
+    public List<Ball> compareTo(NumberProducer pitcher, NumberProducer hitter) {
 
         List<Ball> ballList = new ArrayList<>();
 
@@ -51,17 +48,6 @@ public class Referee implements GameRule{
         return ballList;
     }
 
-    private boolean isOut(List<Ball> result) {
-
-        int strikeCnt = (int) result.stream().filter(c -> c.equals(Ball.STRIKE)).count();
-        int ballCnt = (int) result.stream().filter(c -> c.equals(Ball.BALL)).count();
-
-        printResult(strikeCnt, ballCnt);
-
-        return result.size() == strikeCnt;
-
-    }
-
     private void printResult(int strikeCnt, int ballCnt) {
         StringBuilder strBuilder = new StringBuilder();
 
@@ -80,27 +66,18 @@ public class Referee implements GameRule{
 
         System.out.println(strBuilder);
     }
-
+    //    게임의 시작과 종료 여부 판단
     @Override
-    public void play() {
-        List<Ball> result;
+    public boolean isOut(List<Ball> result) {
 
-        Player pitcher = new Pitcher(getRule());
-        Player hitter = new Hitter(getRule(),scanner);
-        do {
-            hitter.createNumberArray();
-            result = compareTo(pitcher, hitter);
-        } while (!isOut(result));
-    }
+        int strikeCnt = (int) result.stream().filter(c -> c.equals(Ball.STRIKE)).count();
+        int ballCnt = (int) result.stream().filter(Ball.BALL::equals).count();
 
-    @Override
-    public void setRule(GameStatus rule) {
-        gameRuleLength = rule.getGameRuleLength();
-    }
+        printResult(strikeCnt, ballCnt);
+//        3strike
+        isOut = (result.size() == strikeCnt);
+        return isOut;
 
-    @Override
-    public int getRule() {
-        return gameRuleLength;
     }
 
 }

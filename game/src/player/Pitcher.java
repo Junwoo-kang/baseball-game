@@ -1,12 +1,14 @@
 package player;
 
-public class Pitcher implements Player {
+import judgement.GameRule;
+
+public class Pitcher implements NumberProducer {
 
     public String[] randomScore;
 
 
-    public Pitcher(int ruleLength) {
-        this.randomScore = new String[ruleLength];
+    public Pitcher(GameRule gameRule) {
+        this.randomScore = new String[gameRule.getRule()];
         createNumberArray();
     }
 
