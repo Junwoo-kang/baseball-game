@@ -1,6 +1,7 @@
 package judgement;
 
-import player.NumberProducer;
+import ground.Destination;
+import ground.NumberProducer;
 
 import java.util.*;
 
@@ -14,23 +15,18 @@ public class Referee implements JudgeMent{
     }
 
     /**
-     * Pitcher, Hitter 순으로 작성해야함.
-     * @param pitcher
-     * @param hitter
+     * @param throwBall
+     * @param hitBall
      * @return List<Ball>
      */
-    @Override
-    public List<Ball> compareTo(NumberProducer pitcher, NumberProducer hitter) {
+    private List<Ball> compareTo(String[] throwBall, String[] hitBall) {
 
         List<Ball> ballList = new ArrayList<>();
 
-        String[] pitNumber = pitcher.getCreatedNumber();
-        String[] hitNumber = hitter.getCreatedNumber();
-
         for (int i = 0; i <= gameRuleLength - 1; i++) {
             for (int j = 0; j <= gameRuleLength - 1; j++) {
-                boolean judgementStrike = hitNumber[i].equals(pitNumber[j]) && i == j;
-                boolean judgementBall = hitNumber[i].equals(pitNumber[j]) && i != j;
+                boolean judgementStrike = hitBall[i].equals(throwBall[j]) && i == j;
+                boolean judgementBall = hitBall[i].equals(throwBall[j]) && i != j;
 
                 if (judgementStrike) {
                     ballList.add(Ball.STRIKE);
@@ -68,13 +64,13 @@ public class Referee implements JudgeMent{
     }
     //    게임의 시작과 종료 여부 판단
     @Override
-    public boolean isOut(List<Ball> result) {
+    public boolean isOut(String[] throwBall, String[] hitBall) {
+        List<Ball> result = compareTo(throwBall, hitBall);
 
         int strikeCnt = (int) result.stream().filter(c -> c.equals(Ball.STRIKE)).count();
         int ballCnt = (int) result.stream().filter(Ball.BALL::equals).count();
 
         printResult(strikeCnt, ballCnt);
-//        3strike
         isOut = (result.size() == strikeCnt);
         return isOut;
 

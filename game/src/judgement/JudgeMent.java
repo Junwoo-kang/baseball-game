@@ -1,10 +1,8 @@
 package judgement;
 
-import player.NumberProducer;
-
-import java.util.List;
+import ground.Destination;
+import ground.NumberProducer;
 
 public interface JudgeMent {
-    public List<Ball> compareTo(NumberProducer pitcher, NumberProducer hitter);
-    public boolean isOut(List<Ball> result);
+    public boolean isOut(String[] throwBall, String[] hitBall);
 }

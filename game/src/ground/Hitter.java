@@ -1,6 +1,5 @@
-package player;
+package ground;
 
-import judgement.GameAssociation;
 import judgement.GameRule;
 import valid.ValidInput;
 import valid.ValidInputFactory;
@@ -9,7 +8,7 @@ import java.util.Scanner;
 
 public class Hitter implements NumberProducer {
 
-    public String[] HitNumber;
+    private String[] HitNumber;
     private final Scanner scanner;
     private final ValidInput validInput = new ValidInputFactory();
 
@@ -19,19 +18,13 @@ public class Hitter implements NumberProducer {
     }
 
     @Override
-    public void createNumberArray() {
+    public String[] swing() {
 
         System.out.print("숫자를 입력해주세요: ");
         String inputNumber = scanner.next();
         validInput.hitAble(HitNumber.length,inputNumber);
 
         this.HitNumber = inputNumber.split("");
-    }
-
-    @Override
-    public String[] getCreatedNumber() {
         return HitNumber;
     }
-
-
 }

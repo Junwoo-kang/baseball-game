@@ -1,19 +1,16 @@
-package player;
+package ground;
 
 import judgement.GameRule;
 
-public class Pitcher implements NumberProducer {
+public class Pitcher implements Destination {
 
-    public String[] randomScore;
-
-
+    private String[] randomScore;
     public Pitcher(GameRule gameRule) {
         this.randomScore = new String[gameRule.getRule()];
-        createNumberArray();
     }
 
     @Override
-    public void createNumberArray() {
+    public String[] throwBall() {
         StringBuilder randomNum = new StringBuilder();
         String number;
         int pitch = randomScore.length;
@@ -28,12 +25,8 @@ public class Pitcher implements NumberProducer {
             System.out.println(number);
         }
 
-
-    }
-
-    @Override
-    public String[] getCreatedNumber() {
         return randomScore;
+
     }
 
 }
