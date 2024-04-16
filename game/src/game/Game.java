@@ -1,30 +1,42 @@
 package game;
 
 import judgement.*;
-import ground.Destination;
+import ground.PitchAble;
 import ground.Hitter;
 import ground.Pitcher;
-import ground.NumberProducer;
-import valid.ValidInput;
-import valid.ValidInputFactory;
+import ground.HitAble;
 
 import java.util.Scanner;
 
 public class Game implements GameStatus {
 
-    private final GameRule gameRule;
     private final Scanner scanner;
-    private final ValidInput validInput = new ValidInputFactory();
+    private final PitchAble pitcher;
+    private final HitAble hitter;
+    private final JudgeMent referee;
+
     public Game(GameRule gameRule) {
-        this.gameRule = gameRule;
-        this.scanner = new Scanner(System.in);
+        this.scanner    = new Scanner(System.in);
+//            생성자를 통한 의존성 주입.
+        this.pitcher    = new Pitcher(gameRule);
+        this.hitter     = new Hitter(gameRule, scanner);
+        this.referee    = new Referee(gameRule);
     }
 
-    private boolean getRepeat(String repeat) {
-        if (GameOption.CONTINUE.isContinue(repeat)) {
-            return true;
+    private void gameRepeatAble(String input) {
+
+//        String s = GameOption.findValueByInput(input);
+        GameOption gameOption = GameOption.findAnyValuebyInput(input);
+
+        boolean validInput = (gameOption == null);
+        if (validInput) {
+            String message = String.format(
+                    "게임을 새로 시작하려면 %s, 종료하려면 %s를 입력하세요",
+                    GameOption.CONTINUE.getValue(),
+                    GameOption.EXIT.getValue()
+            );
+            throw new IllegalArgumentException(message);
         }
-        return false;
     }
 
     @Override
@@ -38,22 +50,23 @@ public class Game implements GameStatus {
         System.out.println(message);
 
         String repeat = scanner.next();
-        validInput.gameRepeatAble(repeat);
+        gameRepeatAble(repeat);
 
-        return getRepeat(repeat);
+        return GameOption.isContinue(repeat);
     }
 
     @Override
     public void play() {
 
-        Destination pitcher = new Pitcher(gameRule);
-        NumberProducer hitter = new Hitter(gameRule, scanner);
-        JudgeMent referee = new Referee(gameRule);
         String[] hitBall;
-        String[] thrownBall = pitcher.throwBall();
+        String[] thrownBall = pitcher.pitch();
 
         do {
-            hitBall = hitter.swing();
+//            생성자를 통해 의존성 주입
+            hitBall = hitter.hit();
         } while(!referee.isOut(thrownBall, hitBall));
+
+//        아래처럼 작성할 수 있으나 가독성이 좋지 않음.
+//        while(!referee.isOut(thrownBall, hitter.hit()));
     }
 }

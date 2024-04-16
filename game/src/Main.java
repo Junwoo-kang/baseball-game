@@ -10,15 +10,19 @@ public class Main {
 
     public static void main(String[] args) {
         GameRule gameAssociation = gameInit();
-        GameStatus game = new Game(gameAssociation);
+        GameStatus game;
         do {
+            game = new Game(gameAssociation);
             game.play();
         } while (game.isRepeat());
 
     }
 
     public static GameRule gameInit() {
-        int gameRuleLength = 3;
+        String  gameRuleLength = "3";
+
+//        GameRule gameRule = new GameAssociation();
+//        gameRule.setRule(gameRuleLength);
 
         return new GameAssociation(gameRuleLength);
     }

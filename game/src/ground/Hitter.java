@@ -1,30 +1,47 @@
 package ground;
 
 import judgement.GameRule;
-import valid.ValidInput;
-import valid.ValidInputFactory;
 
 import java.util.Scanner;
 
-public class Hitter implements NumberProducer {
+public class Hitter implements HitAble {
 
     private String[] HitNumber;
     private final Scanner scanner;
-    private final ValidInput validInput = new ValidInputFactory();
-
     public Hitter(GameRule gameRule, Scanner scanner) {
         this.HitNumber = new String[gameRule.getRule()];
         this.scanner = scanner;
     }
 
     @Override
-    public String[] swing() {
+    public String[] hit() {
 
         System.out.print("숫자를 입력해주세요: ");
         String inputNumber = scanner.next();
-        validInput.hitAble(HitNumber.length,inputNumber);
+        hitAble(HitNumber.length,inputNumber);
 
         this.HitNumber = inputNumber.split("");
         return HitNumber;
     }
+
+    private void hitAble(int ruleLength, String input) {
+
+        String message;
+        boolean validInput = (input.length() == ruleLength);
+        try {
+            if (validInput) {
+                Integer.parseInt(input);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        } catch (NumberFormatException e) {
+            message = "입력은 숫자로 해주세요";
+            throw new IllegalArgumentException(message);
+        } catch (IllegalArgumentException e) {
+            message = "숫자는 "+ruleLength+"개여야 합니다.";
+            throw new IllegalArgumentException(message);
+        }
+    }
+
 }
+

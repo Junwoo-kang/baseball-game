@@ -15,7 +15,7 @@ public enum GameOption {
 
     public String  getValue() { return value; }
 
-    public boolean isContinue(String  option) {
+    public static boolean isContinue(String option) {
         return GameOption.CONTINUE.getValue().equals(option);
     }
 

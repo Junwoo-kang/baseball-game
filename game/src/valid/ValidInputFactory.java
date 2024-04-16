@@ -26,21 +26,6 @@ public class ValidInputFactory implements ValidInput {
         }
     }
 
-    @Override
-    public void gameRepeatAble(String input) {
 
-//        String s = GameOption.findValueByInput(input);
-        GameOption gameOption = GameOption.findAnyValuebyInput(input);
-
-        boolean validInput = (gameOption == null);
-        if (validInput) {
-            String message = String.format(
-                    "게임을 새로 시작하려면 %s, 종료하려면 %s를 입력하세요",
-                    GameOption.CONTINUE.getValue(),
-                    GameOption.EXIT.getValue()
-            );
-            throw new IllegalArgumentException(message);
-        }
-    }
 
 }

@@ -2,15 +2,15 @@ package ground;
 
 import judgement.GameRule;
 
-public class Pitcher implements Destination {
+public class Pitcher implements PitchAble {
 
-    private String[] randomScore;
+    private static String[] randomScore;
     public Pitcher(GameRule gameRule) {
-        this.randomScore = new String[gameRule.getRule()];
+        randomScore = new String[gameRule.getRule()];
     }
 
     @Override
-    public String[] throwBall() {
+    public String[] pitch() {
         StringBuilder randomNum = new StringBuilder();
         String number;
         int pitch = randomScore.length;
@@ -24,9 +24,7 @@ public class Pitcher implements Destination {
             }
             System.out.println(number);
         }
-
         return randomScore;
-
     }
 
 }

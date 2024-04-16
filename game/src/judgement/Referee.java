@@ -1,8 +1,5 @@
 package judgement;
 
-import ground.Destination;
-import ground.NumberProducer;
-
 import java.util.*;
 
 public class Referee implements JudgeMent{
@@ -24,7 +21,7 @@ public class Referee implements JudgeMent{
         List<Ball> ballList = new ArrayList<>();
 
         for (int i = 0; i <= gameRuleLength - 1; i++) {
-            for (int j = 0; j <= gameRuleLength - 1; j++) {
+            for (int j = 0; j <= gameRuleLength- 1; j++) {
                 boolean judgementStrike = hitBall[i].equals(throwBall[j]) && i == j;
                 boolean judgementBall = hitBall[i].equals(throwBall[j]) && i != j;
 
