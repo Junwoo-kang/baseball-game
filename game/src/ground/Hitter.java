@@ -24,6 +24,7 @@ public class Hitter implements HitAble {
         return HitNumber;
     }
 
+
     private void hitAble(int ruleLength, String input) {
 
         String message;

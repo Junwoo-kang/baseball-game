@@ -19,7 +19,7 @@ public class Main {
     }
 
     public static GameRule gameInit() {
-        String  gameRuleLength = "3";
+        String gameRuleLength = "3";
 
 //        GameRule gameRule = new GameAssociation();
 //        gameRule.setRule(gameRuleLength);

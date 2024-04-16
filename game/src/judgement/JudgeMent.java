@@ -1,5 +1,5 @@
 package judgement;
 
 public interface JudgeMent {
-    public boolean isOut(String[] throwBall, String[] hitBall);
+    public boolean isOut(String[] throwBall, String[] hitBall, GameRule rule);
 }

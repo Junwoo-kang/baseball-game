@@ -14,10 +14,12 @@ public class Game implements GameStatus {
     private final PitchAble pitcher;
     private final HitAble hitter;
     private final JudgeMent referee;
+    private final GameRule rule;
 
     public Game(GameRule gameRule) {
+        this.rule = gameRule;
         this.scanner    = new Scanner(System.in);
-//            생성자를 통한 의존성 주입.
+
         this.pitcher    = new Pitcher(gameRule);
         this.hitter     = new Hitter(gameRule, scanner);
         this.referee    = new Referee(gameRule);
@@ -64,7 +66,7 @@ public class Game implements GameStatus {
         do {
 //            생성자를 통해 의존성 주입
             hitBall = hitter.hit();
-        } while(!referee.isOut(thrownBall, hitBall));
+        } while(!referee.isOut(thrownBall, hitBall, rule));
 
 //        아래처럼 작성할 수 있으나 가독성이 좋지 않음.
 //        while(!referee.isOut(thrownBall, hitter.hit()));

@@ -11,27 +11,17 @@ public class Referee implements JudgeMent{
         gameRuleLength = game.getRule();
     }
 
-    /**
-     * @param throwBall
-     * @param hitBall
-     * @return List<Ball>
-     */
-    private List<Ball> compareTo(String[] throwBall, String[] hitBall) {
+    private List<Ball> compareTo(String[] throwBall, String[] hitBall, GameRule gameRule) {
 
         List<Ball> ballList = new ArrayList<>();
 
         for (int i = 0; i <= gameRuleLength - 1; i++) {
             for (int j = 0; j <= gameRuleLength- 1; j++) {
-                boolean judgementStrike = hitBall[i].equals(throwBall[j]) && i == j;
-                boolean judgementBall = hitBall[i].equals(throwBall[j]) && i != j;
-
-                if (judgementStrike) {
-                    ballList.add(Ball.STRIKE);
-                } else if (judgementBall) {
-                    ballList.add(Ball.BALL);
+                Ball ball = gameRule.throwBallRule(hitBall[i], throwBall[j], i, j);
+                if (ball.equals(Ball.STRIKE) || ball.equals(Ball.BALL)) {
+                    ballList.add(ball);
                 }
             }
-
             boolean validBallList = ballList.size() != (i + 1);
             if (validBallList) {
                 ballList.add(Ball.NOTHING);
@@ -61,8 +51,8 @@ public class Referee implements JudgeMent{
     }
     //    게임의 시작과 종료 여부 판단
     @Override
-    public boolean isOut(String[] throwBall, String[] hitBall) {
-        List<Ball> result = compareTo(throwBall, hitBall);
+    public boolean isOut(String[] throwBall, String[] hitBall, GameRule rule) {
+        List<Ball> result = compareTo(throwBall, hitBall, rule);
 
         int strikeCnt = (int) result.stream().filter(c -> c.equals(Ball.STRIKE)).count();
         int ballCnt = (int) result.stream().filter(Ball.BALL::equals).count();
