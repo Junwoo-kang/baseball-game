@@ -1,11 +1,11 @@
 package game;
 
-import judgement.*;
-import ground.PitchAble;
-import ground.Hitter;
-import ground.Pitcher;
 import ground.HitAble;
+import ground.PitchAble;
+import judgement.GameOption;
+import judgement.JudgeMent;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Game implements GameStatus {
@@ -15,20 +15,19 @@ public class Game implements GameStatus {
     private final HitAble hitter;
     private final JudgeMent referee;
 
-    public Game(GameRule gameRule) {
-        this.scanner    = new Scanner(System.in);
-//            생성자를 통한 의존성 주입.
-        this.pitcher    = new Pitcher(gameRule);
-        this.hitter     = new Hitter(gameRule, scanner);
-        this.referee    = new Referee(gameRule);
+    public Game(PitchAble pitcher, HitAble hitter, JudgeMent referee) {
+        scanner    = new Scanner(System.in);
+        this.pitcher = pitcher;
+        this.hitter = hitter;
+        this.referee = referee;
     }
 
     private void gameRepeatAble(String input) {
 
 //        String s = GameOption.findValueByInput(input);
-        GameOption gameOption = GameOption.findAnyValuebyInput(input);
+        Optional<GameOption> gameOption = Optional.ofNullable(GameOption.findAnyValuebyInput(input));
 
-        boolean validInput = (gameOption == null);
+        boolean validInput = gameOption.isEmpty();
         if (validInput) {
             String message = String.format(
                     "게임을 새로 시작하려면 %s, 종료하려면 %s를 입력하세요",

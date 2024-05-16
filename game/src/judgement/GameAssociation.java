@@ -1,6 +1,10 @@
 package judgement;
 
-import java.util.Arrays;
+import game.Game;
+import ground.HitAble;
+import ground.Hitter;
+import ground.PitchAble;
+import ground.Pitcher;
 
 public class GameAssociation implements GameRule{
 
@@ -10,17 +14,12 @@ public class GameAssociation implements GameRule{
         this.gameRuleLength = gameRuleLength;
     }
     @Override
-    public int getRule() {
-//        규칙이 바뀔 경우,
-//        해당 메서드만 수정한다.
-//        EX_소수일 때,
-        if (gameRuleLength.contains(".")) {
-            String[] a = gameRuleLength.split("\\.");
-            String b = Arrays.toString(a);
+    public Game declareRule() {
 
-            return Integer.parseInt(b.substring(1,2)+1);
-        }
+        PitchAble pitcher = new Pitcher(gameRuleLength);
+        HitAble hitter = new Hitter(gameRuleLength);
+        JudgeMent referee = new Referee(gameRuleLength);
 
-        return Integer.parseInt(gameRuleLength);
+        return new Game(pitcher,hitter,referee);
     }
 }

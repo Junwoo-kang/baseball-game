@@ -1,14 +1,15 @@
 package judgement;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Referee implements JudgeMent{
 
     private static int gameRuleLength;
     private static Boolean isOut;
 
-    public Referee(GameRule game) {
-        gameRuleLength = game.getRule();
+    public Referee(String  gameRule) {
+        gameRuleLength = Integer.parseInt(gameRule);
     }
 
     /**
@@ -64,7 +65,7 @@ public class Referee implements JudgeMent{
     public boolean isOut(String[] throwBall, String[] hitBall) {
         List<Ball> result = compareTo(throwBall, hitBall);
 
-        int strikeCnt = (int) result.stream().filter(c -> c.equals(Ball.STRIKE)).count();
+        int strikeCnt = (int) result.stream().filter(Ball.STRIKE::equals).count();
         int ballCnt = (int) result.stream().filter(Ball.BALL::equals).count();
 
         printResult(strikeCnt, ballCnt);

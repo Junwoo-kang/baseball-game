@@ -1,12 +1,10 @@
 package ground;
 
-import judgement.GameRule;
-
 public class Pitcher implements PitchAble {
 
     private static String[] randomScore;
-    public Pitcher(GameRule gameRule) {
-        randomScore = new String[gameRule.getRule()];
+    public Pitcher(String gameRule) {
+        randomScore = new String[Integer.parseInt(gameRule)];
     }
 
     @Override

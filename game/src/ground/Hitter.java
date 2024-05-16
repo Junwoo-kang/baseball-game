@@ -1,16 +1,15 @@
 package ground;
 
-import judgement.GameRule;
-
 import java.util.Scanner;
 
 public class Hitter implements HitAble {
 
     private String[] HitNumber;
     private final Scanner scanner;
-    public Hitter(GameRule gameRule, Scanner scanner) {
-        this.HitNumber = new String[gameRule.getRule()];
-        this.scanner = scanner;
+    public Hitter(String  gameRule) {
+        this.HitNumber =new String[Integer.parseInt(gameRule)];
+
+        this.scanner = new Scanner(System.in);
     }
 
     @Override
